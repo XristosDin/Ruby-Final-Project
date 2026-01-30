@@ -1,0 +1,22 @@
+<h1>Νέα Ανάρτηση</h1>
+
+<%= form_with model: @post, local: true do |f| %>
+  <div>
+    <%= f.label :title, "Τίτλος" %><br>
+    <%= f.text_field :title, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :body, "Περιγραφή" %><br>
+    <%= f.text_area :body, rows: 5, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :category_id, "Κατηγορία" %><br>
+    <%= f.collection_select :category_id, @categories, :id, :name, prompt: "Επιλογή κατηγορίας" %>
+  </div>
+
+  <br>
+
+  <%= f.submit "Δημιουργία" %>
+<% end %>

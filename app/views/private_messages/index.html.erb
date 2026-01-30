@@ -1,0 +1,39 @@
+<h1>Inbox</h1>
+
+
+<h2>Αποστολή μηνύματος</h2>
+
+<%= form_with url: private_messages_path, method: :post, local: true do %>
+  <div>
+    <label>Προς:</label>
+    <%= select_tag :receiver_id,
+    options_for_select(
+      current_user.contacts.map { |c| [c.contact_user.email, c.contact_user.id] }
+    ),
+    required: true %>
+
+  </div>
+
+  <div>
+    <label>Μήνυμα:</label><br>
+    <%= text_area_tag :body, nil, required: true %>
+  </div>
+
+  <%= submit_tag "Αποστολή" %>
+<% end %>
+
+<hr>
+
+
+<% @messages.each do |message| %>
+  <p>
+    <strong>
+      <%= message.sender_id == current_user.id ? "Εσύ" : User.find(message.sender_id).email %>
+      →
+      <%= message.receiver_id == current_user.id ? "Εσύ" : User.find(message.receiver_id).email %>
+    </strong>
+    <br>
+    <%= message.body %>
+  </p>
+  <hr>
+<% end %>

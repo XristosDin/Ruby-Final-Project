@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab Portal</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <nav style="padding:10px; border-bottom:1px solid #ccc;">
+      <strong>Lab Portal</strong> |
+
+      <%= link_to "Αρχική", root_path %> |
+      <%= link_to "Posts", posts_path %> |
+      <%= link_to "Νέο Post", new_post_path %> |
+      <%= link_to "Επαφές", contacts_path %> |
+      <%= link_to "Inbox", private_messages_path %>
+
+      <span style="float:right;">
+        <% if user_signed_in? %>
+          <%= current_user.email %> |
+          <%= button_to "Logout",
+                destroy_user_session_path,
+                method: :delete,
+                form: { data: { turbo: false } } %>
+        <% end %>
+      </span>
+    </nav>
+     <% if !user_signed_in? %>
+  <div style="margin-bottom: 15px;">
+    <%= link_to "Sign in", new_user_session_path %> |
+    <%= link_to "Sign up", new_user_registration_path %>
+  </div>
+  <% end %>
+
+    <main style="padding:20px;">
+      <%= yield %>
+    </main>
+  </body>
+</html>

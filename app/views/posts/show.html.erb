@@ -1,0 +1,15 @@
+<h1><%= @post.title %></h1>
+
+<p><%= @post.body %></p>
+
+<p>
+  Κατηγορία:
+  <strong><%= @post.category&.name %></strong>
+</p>
+
+<p>
+  Από:
+  <%= @post.user.email %>
+</p>
+
+<%= link_to "← Πίσω", posts_path %>

@@ -1,0 +1,35 @@
+<h1>Οι επαφές μου</h1>
+
+<h3>Προσθήκη επαφής</h3>
+
+<% @users.each do |user| %>
+  <p>
+    <%= user.email %>
+    <%= button_to "Προσθήκη", contacts_path(contact_user_id: user.id), method: :post %>
+  </p>
+<% end %>
+
+<hr>
+
+<h3>Οι επαφές μου</h3>
+
+<% if @contacts.any? %>
+  <% @contacts.each do |user| %>
+    <p>
+      <strong><%= user.email %></strong>
+
+      <%= button_to "Αφαίρεση", contact_path(user.id), method: :delete %>
+    </p>
+
+    <%= form_with url: private_messages_path, method: :post do %>
+      <%= hidden_field_tag :receiver_id, user.id %>
+      <%= text_field_tag :body, nil, placeholder: "Γράψε μήνυμα" %>
+      <%= submit_tag "Αποστολή" %>
+    <% end %>
+
+    <hr>
+  <% end %>
+<% else %>
+  <p>Δεν έχετε επαφές.</p>
+<% end %>
+

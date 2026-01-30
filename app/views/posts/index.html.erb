@@ -1,0 +1,29 @@
+<h1>Αναρτήσεις</h1>
+
+<%= form_with url: posts_path, method: :get, local: true do %>
+  <%= select_tag :category_id,
+        options_from_collection_for_select(@categories, :id, :name, params[:category_id]),
+        include_blank: "Όλες οι κατηγορίες" %>
+
+  <%= submit_tag "Φιλτράρισμα" %>
+<% end %>
+
+<hr>
+
+<% if @posts.any? %>
+  <% @posts.each do |post| %>
+    <h3><%= link_to post.title, post_path(post) %></h3>
+    <p><%= post.body %></p>
+    <p>
+      Κατηγορία:
+      <strong><%= post.category&.name %></strong>
+    </p>
+    <p>
+      Από:
+      <%= post.user.email %>
+    </p>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Δεν υπάρχουν αναρτήσεις.</p>
+<% end %>
